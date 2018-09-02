@@ -6,7 +6,9 @@ El repositorio sigue la bibliografía en la rama "Libros" y la estructura de los
 - Sintaxis y funciones sencillas
 - Funciones compuestas con otros temas
  
-Read.me producido en [StackEdit][St]
+Read.me producido en [StackEdit][StackEdit]
+[StackEdit]:https://stackedit.io/app
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYxNjkxODM5Myw0OTMyODAxMDZdfQ==
+eyJoaXN0b3J5IjpbMjg3MDg3OTYxLDQ5MzI4MDEwNl19
 -->

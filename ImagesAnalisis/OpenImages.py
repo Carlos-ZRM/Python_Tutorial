@@ -47,11 +47,12 @@ class OpenImages :
 
 
     def umbral ( self, top, img):
-        datos = list(Historial[xHist].img.getdata())
-        aux =[]
+        datos = list(self.Historial[self.xHist].getdata() )
+        aux = []
         sum = 0
-        img.show()
-        print (datos)
+       
+       
+
         for i in range (len(datos)):
             aux= datos[i]
             sum = 0
@@ -59,15 +60,20 @@ class OpenImages :
                 sum+=aux[j]
             sum=sum/len(aux)
             if sum > top :
-                datos[i]=(0,0,0)
+                #datos[i]=(0,0,0)
+                datos[i]=0
             else :
-                datos[i]=(255,255,255)
-        result = datos
-        img.putdata(datos)
-        img.save("test.jpg")
-        img.show()
-        return result
-
+                #datos[i]=(255,255,255)
+                datos[i]=1
+        dimensiones = self.Historial[self.xHist].size
+        img2  = Image.new('1', dimensiones )
+        img2.putdata(datos)
+        print( datos)
+        img2.save("test2.jpg")
+        img2.show()
+        self.addHistorial( img2)
+        return 
+    
 
 print("Hola")
 op = OpenImages()
@@ -78,9 +84,10 @@ try:
     img = Image.open(path)
     print("Se abrio imagen")
     op.addHistorial(img)
+    img.show()
     print (img.histogram())
-    #escala( img )
-    #umbral(3/5*255   ,img)
+    #op.escala( img )
+    op.umbral(3/5*255   ,img)
     histograma=Plot_Time_Series()
     histograma.plot_Histograma(img.histogram())
 

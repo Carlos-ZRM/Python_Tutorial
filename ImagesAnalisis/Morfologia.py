@@ -9,6 +9,16 @@ class Morfologia :
         self.tiles = tiles
         self.dataxy = dataxy
         self.matriz = self.crearMat(data)
+        '''
+            N
+        W -----E
+            S
+        '''
+        self.w = tilecx
+        self.e = tilex-tilecx-1
+        self.s = tiley-tilecy-1
+        self.n = tilecy
+        print (str(self.n)+" "+str(self.w)+" "+str(self.e)+" "+str(self.s)  )
         print (self.matriz)
         self.data = data
   
@@ -21,7 +31,6 @@ class Morfologia :
                 aux.append(data[c])
                 c+=1
             matriz.append(aux)
-           
         return matriz
     def dilatar (self) :
         x = 0
@@ -30,26 +39,43 @@ class Morfologia :
         for i in range ( self.dataxy[1]  ):
             for j in range (self.dataxy[0] ):
                 s = self.word(j,i)
-                print (s)
-        pass
-        
+                print (s)        
         return
     def erosion (self) :
         pass
     def union (self ):
         pass
     def word (self,x,y):
-        s = []
+        word = []
+        waux = []
         limi = 0
         limf = 0
-        for i in range (y, y+self.tiley) :
-            if (i < dataxy[1]):
-                saux=[-1]*1
+        print ("range "+str(x)+" "+str(range(y-self.n, y + self.s +1) ))
+        for i in range(y-self.n, y + self.s +1 ):
+            if (i < 0 or i > tiley ) :
+                waux = [-1]*tilex 
+                word.append(waux)
+            else :
+                if (x < self.w ):
+                    waux = [-1]*(self.w-x) 
+                    waux = waux+self.matriz[i][x : x+self.e+1]
+                    word.append(waux)
+                elif (self.tilex - x <=self.e) :
+                    waux = waux+[-1]*(self.e-(self.tilex - x))
+                    word.append(waux)
+                else :
+                    waux= self.matriz[i][x-self.w : x+self.e+1]
+                    word.append(waux)
+
+        '''
+        for i in range (y, y+self.tiley) : 
+            if (i < dataxy[1]) :
+                saux= [-1]*1
                 saux= []
                 if (x-1<0) :
                     saux=[-1]*1
                     saux = saux+self.matriz[i][x : self.tilecx-x+1]
-                elif x+2>self.tilex :
+                elif x+2 > self.tilex :
                     saux = self.matriz[i][x-1 : x]
                     saux = saux +[-1]*1
                 else :
@@ -57,7 +83,9 @@ class Morfologia :
                 #saux.insert(self.matriz[i][x : self.tilex])
                 s.append(saux)
             else :
-                s.append( [-1]*tilex)
+                s.append( [-1]*tilex )
+        
+            '''
         #for i in range (self.tilex*self.tiley):
         #    s+="*"
         '''
@@ -68,7 +96,8 @@ class Morfologia :
             print(str(limi)+","+str(limf))
             s.append(self.data[limi:limf]  )
         '''
-        return s
+        return word
+
 
 data = [0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0]
 data = [0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0]
@@ -78,11 +107,10 @@ dataxy = [3,4]
 i = Image.new('1', dataxy)
 i.putdata(data)
 
-i.show()
 
 tiles = [0,0,0,0,1,0,1,1,1]
-tilex = 4
-tiley = 5
+tilex = 3
+tiley = 3
 tilecx = 1
 tilecy = 1
 print(data)

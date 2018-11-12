@@ -39,7 +39,7 @@ def buildCADirectory(path, path2) :
     archivos = openDirectory(path)
     for i in range ( len(archivos) ) :
         if "Data" in archivos[i]  and  ".txt" in archivos[i] :
-           makeImage(path+archivos[i], path2+archivos[i][0:-4]+".png")  
+            makeImage(path+archivos[i], path2+archivos[i][0:-4]+".png")  
     return 
     
 #makeImage( "test.txt" , "testca.png" )

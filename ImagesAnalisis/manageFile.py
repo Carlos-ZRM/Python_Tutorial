@@ -6,12 +6,13 @@ from os.path import isfile, join
 
 def openDirectory (directory) :
     list = [f for f in listdir(directory) if isfile(join(directory, f))]
-    print (list)
     return list
+
 def openFile( file ):
     with open( file , "r") as f:
         list_lines = f.readlines() 
     return list_lines
+
 def makeImage( file, image ) :
     data = openFile (file)
     ca_obj = buildCA(data)
@@ -21,6 +22,7 @@ def makeImage( file, image ) :
     i.save(image)
     i.show()
     return 
+
 def buildCA( line):
     data = []
     str = ""
@@ -32,12 +34,14 @@ def buildCA( line):
             data.append( not int(line[i][j]) )
     object.setData( data )        
     return object
+
 def buildCADirectory(path) :
     archivos = openDirectory(path)
     for i in range ( len(archivos) ) :
-        if "Data" in archivos[i] :
-           makeImage(path+archivos[i], archivos[i][0:-4]+".png")  
+        if "Data" in archivos[i]  and  ".txt" in archivos[i] :
+           makeImage(path+archivos[i], path+archivos[i][0:-4]+".png")  
     return 
+    
 #makeImage( "test.txt" , "testca.png" )
 openDirectory("64/")
 buildCADirectory("64/")

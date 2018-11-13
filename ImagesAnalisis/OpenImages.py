@@ -50,8 +50,6 @@ class OpenImages :
         datos = list(self.Historial[self.xHist].getdata() )
         aux = []
         sum = 0
-       
-       
 
         for i in range (len(datos)):
             aux= datos[i]

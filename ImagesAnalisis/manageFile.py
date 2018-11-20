@@ -12,6 +12,11 @@ def openFile( file ):
     with open( file , "r") as f:
         list_lines = f.readlines() 
     return list_lines
+def makeImageMorfologia(dataxy, data, file):
+    i = Image.new('1', dataxy)
+    i.putdata(data)
+    i.save(file)
+    i.show()
 
 def makeImage( file, image ) :
     data = openFile (file)
@@ -43,5 +48,5 @@ def buildCADirectory(path, path2) :
     return 
     
 #makeImage( "test.txt" , "testca.png" )
-openDirectory("64/")
-buildCADirectory("64/data", "64/espacio")
+#openDirectory("64/")
+#buildCADirectory("64/data", "64/espacio")

@@ -47,8 +47,8 @@ class Morfologia :
             #s = s + '\n'
             for j in range (self.dataxy[0] ):
             #   s = s+str(self.matriz[i][j])
-                #s = self.word(i,j)
-                self.andOp(i,j,newdata,self.tiles[0])
+                s = self.worddos(i,j, newdata, self.tiles[0])
+                #self.andOp(i,j,newdata,self.tiles[0])
                 print (s)  
                 #       
         lista = self.crearData(newdata)
@@ -57,6 +57,49 @@ class Morfologia :
         pass
     def union (self ):
         pass
+    def worddos (self,y,x,newdata,tile):
+        word = []
+        waux = []
+        limi = 0
+        limf = 0
+        #print ("range "+str(x)+" "+str(range(y-self.n, y + self.s +1) ))
+        ry = range(y-self.n, y + self.s +1 )
+        for i in ry:
+            waux = []
+            # if (i < 0 or i > tiley ) :
+            #      waux = [-1]*tilex 
+            #    word.append(waux)
+            if (not (tile[self.tilecy][self.tilecx] and self.matriz[y][x]) ):
+                return 
+            if (not (i < 0 or i > tiley )) :
+                rx = range(x-self.w , x+self.e+1)
+                #print(str(y)+" . "+str(x)+" : "+str(len(range(x-self.w , x+self.e+1))) )
+                for j in rx :
+                    print (str(y)+","+str(x))
+                    if (j>0 and j< self.dataxy[0]) :
+                        if tile[i-ry[0]][j-rx[0]]!=-1:
+                            newdata[i][j] =  self.matriz[i][j] or tile[i-ry[0]][j-rx[0]] 
+                            print ("    "+str(i)+","+str(j))
+                            print ("    "+str(i-ry[0])+","+str(j -rx[0]))
+                        waux.append(self.matriz[i][j])
+                    else:
+                        waux.append(-1)
+                word.append(waux)
+                '''
+                if (x < self.w ):
+                    waux = [-1]*(self.w-x) 
+                    waux = waux+self.matriz[i][x : x+self.e+1]
+                    word.append(waux)
+                elif (self.tilex - x <self.e) :
+                    waux = waux+[-1]*(self.e-(self.tilex - x))
+                    word.append(waux)
+                else :
+                    waux= self.matriz[i][x-self.w : x+self.e+1]+[-1]*(self.e-self.tilex +x + 1)
+                    word.append(waux)
+                ''' 
+                
+        return word
+    
     def word (self,y,x):
         word = []
         waux = []
@@ -95,6 +138,7 @@ class Morfologia :
         return (i>=0 and i<self.dataxy[0] )
     def ranY (self, j) :
         return (j>=0 and j<self.dataxy[1])
+    
 
     def andOp (self, y, x, newdata, tile):
         if (self.matriz[y][x]!= tile[self.tilecy][self.tilecx]):
@@ -123,6 +167,8 @@ class Morfologia :
                     a = ord[i][j] and tile[i][j]
 
         '''
+
+
 data = [0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0]
 data = [0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0]
 data = [0,0,0,0,0,1,0,1,0,1,0,0]

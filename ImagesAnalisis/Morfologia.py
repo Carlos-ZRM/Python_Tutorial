@@ -75,12 +75,14 @@ class Morfologia :
                 rx = range(x-self.w , x+self.e+1)
                 #print(str(y)+" . "+str(x)+" : "+str(len(range(x-self.w , x+self.e+1))) )
                 for j in rx :
-                    print (str(y)+","+str(x))
+                    print("     ")
+                    print (" y,x "+str(y)+","+str(x))
+                    print (" i,j: "+str(i)+","+str(j))
+                    print (" ti,tj: "+str(i-ry[0])+","+str(j-rx[0]))
                     if (j>0 and j< self.dataxy[0]) :
                         if tile[i-ry[0]][j-rx[0]]!=-1:
                             newdata[i][j] =  self.matriz[i][j] or tile[i-ry[0]][j-rx[0]] 
-                            print ("    "+str(i)+","+str(j))
-                            print ("    "+str(i-ry[0])+","+str(j -rx[0]))
+                            print ("               "+str(i-ry[0])+","+str(j -rx[0]))
                         waux.append(self.matriz[i][j])
                     else:
                         waux.append(-1)

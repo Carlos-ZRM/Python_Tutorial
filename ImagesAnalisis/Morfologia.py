@@ -62,6 +62,7 @@ class Morfologia :
         waux = []
         limi = 0
         limf = 0
+        auxx = 0 # 
         #print ("range "+str(x)+" "+str(range(y-self.n, y + self.s +1) ))
         ry = range(y-self.n, y + self.s +1 )
         for i in ry:
@@ -74,18 +75,21 @@ class Morfologia :
             if (not (i < 0 or i > tiley )) :
                 rx = range(x-self.w , x+self.e+1)
                 #print(str(y)+" . "+str(x)+" : "+str(len(range(x-self.w , x+self.e+1))) )
+                auxx = 0
                 for j in rx :
                     print("     ")
                     print (" y,x "+str(y)+","+str(x))
                     print (" i,j: "+str(i)+","+str(j))
-                    print (" ti,tj: "+str(i-ry[0])+","+str(j-rx[0]))
-                    if (j>0 and j< self.dataxy[0]) :
-                        if tile[i-ry[0]][j-rx[0]]!=-1:
-                            newdata[i][j] =  self.matriz[i][j] or tile[i-ry[0]][j-rx[0]] 
+                    print (" ti,tj: "+str(i-ry[0])+","+str(auxx) )
+                    if (j>0 and j< 3 ) :
+                        print(tile[i-ry[0]][auxx])
+                        if tile[i-ry[0]][auxx]==1:
+                            newdata[i][j] =  self.matriz[i][j] or tile[i-ry[0]][auxx] 
                             print ("               "+str(i-ry[0])+","+str(j -rx[0]))
                         waux.append(self.matriz[i][j])
                     else:
                         waux.append(-1)
+                    auxx = auxx + 1
                 word.append(waux)
                 '''
                 if (x < self.w ):
@@ -171,7 +175,7 @@ class Morfologia :
         '''
 
 
-data = [0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0]
+ hnbv)9o0a = [0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0]
 data = [0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0]
 data = [0,0,0,0,0,1,0,1,0,1,0,0]
 '''data = [1,1,1,1,1,1,1,1,

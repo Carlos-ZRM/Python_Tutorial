@@ -1,5 +1,6 @@
 from PIL import Image
 from time_series import Plot_Time_Series
+import Operaciones
 import sys
 
 class OpenImages :
@@ -45,6 +46,43 @@ class OpenImages :
         img.show()
         return result
 
+    def rgb(self, img):
+        datosr=[]
+        datosg=[]
+        datosb=[]
+        datos = list(img.getdata())
+        aux=[]
+        dimensiones = img.size
+        for i in range(len(datos)):
+            aux=datos[i]
+            datosr.append((aux[0],0,0))
+            datosg.append((0,aux[1],0))
+            datosb.append((0,0,aux[2]))
+        imgr  = Image.new('RGB', dimensiones )
+        imgr.putdata(datosr)
+        imgr.save("imagenr.jpg")
+        
+        imgg  = Image.new( 'RGB',dimensiones )
+        imgg.putdata(datosg)
+        imgg.save("imageng.jpg")
+        
+        imgb  = Image.new( 'RGB',dimensiones )
+        imgb.putdata(datosb)
+        imgb.save("imagenb.jpg")
+
+        imgr.show()
+        imgg.show()
+        imgb.show()
+
+        
+        datar = Operaciones.resta(datos,datosb)
+        imgs  = Image.new( 'RGB',dimensiones )
+        imgs.putdata(datar)
+        imgs.save("imagens.jpg")
+        imgs.show()
+        histograma=Plot_Time_Series()
+        histograma.plot_Histograma(imgs.histogram())
+
 
     def umbral ( self, top, img):
         datos = list(self.Historial[self.xHist].getdata() )
@@ -83,11 +121,12 @@ try:
     print("Se abrio imagen")
     op.addHistorial(img)
     img.show()
-    print (img.histogram())
+    op.rgb(img)
+    #print (img.histogram())
     #op.escala( img )
-    op.umbral(3/5*255   ,img)
-    histograma=Plot_Time_Series()
-    histograma.plot_Histograma(img.histogram())
+    #op.umbral(3/5*255   ,img)
+    #histograma=Plot_Time_Series()
+    #histograma.plot_Histograma(img.histogram())
 
 except IOError:
     print("Error")

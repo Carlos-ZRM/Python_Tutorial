@@ -125,8 +125,8 @@ try:
     #print (img.histogram())
     #op.escala( img )
     #op.umbral(3/5*255   ,img)
-    #histograma=Plot_Time_Series()
-    #histograma.plot_Histograma(img.histogram())
+    histograma=Plot_Time_Series()
+    histograma.plot_Histograma(img.histogram())
 
 except IOError:
     print("Error")

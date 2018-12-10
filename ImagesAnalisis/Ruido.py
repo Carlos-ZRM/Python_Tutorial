@@ -3,7 +3,7 @@ from random import uniform
 import Operaciones
 import matplotlib.pyplot as plt
 
-def additivo (img, valor):
+def aditivo (image, valor):
     img = image.convert('L')
     datos = img.getdata()
     datosn = []
@@ -15,9 +15,10 @@ def additivo (img, valor):
             datosn.append(datos[i])
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("ruidoAdd.jpg")
-    imgg.show()
-def sustractivo (img, valor):
+    imgg.save("inuse.jpg")
+    #imgg.show()
+    return imgg
+def sustractivo (image, valor):
     img = image.convert('L')
     datos = img.getdata()
     datosn = []
@@ -29,10 +30,10 @@ def sustractivo (img, valor):
             datosn.append(datos[i])
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("ruidoAdd.jpg")
-    imgg.show()
-
-def pimienta (img, valor):
+    imgg.save("inuse.jpg")
+    #imgg.show()
+    return imgg
+def pimienta (image, valor):
     img = image.convert('L')
     datos = img.getdata()
     datosn = []
@@ -46,12 +47,13 @@ def pimienta (img, valor):
             datosn.append(datos[i])
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("ruidoAdd.jpg")
-    imgg.show()
+    imgg.save("inuse.jpg")
+    #imgg.show()
+    return imgg
 
-
+'''
 image = Image.open("snakes.jpg")
 sustractivo(image,.1)
 additivo(image,.1)
 pimienta(image,.2)
-    
+'''

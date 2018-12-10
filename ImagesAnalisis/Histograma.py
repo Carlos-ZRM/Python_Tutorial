@@ -44,7 +44,7 @@ def getBlue(blueVal):
     return '#%02x%02x%02x' % (0, 0, blueVal)
 
 def histogramaRGB(image):
-    image.show()
+    #image.show()
     i_size = image.size[0]*image.size[1]
     histogram = image.histogram()
 
@@ -54,7 +54,8 @@ def histogramaRGB(image):
     ml1 = 0.0
     ml2 = 0.0
     ml3 = 0.0
-    plt.figure(0)
+    plt.gcf()
+    #plt.figure(0)
     for i in range(0, 256):
         ml1 = ml1 + l1[i]
         plt.bar(i, l1[i], color = getRed(i), edgecolor=getRed(i), alpha=0.3)
@@ -62,7 +63,7 @@ def histogramaRGB(image):
 
     # G histogram
 
-    plt.figure(1)
+   # plt.figure(1)
 
     for i in range(0, 256):
         ml2 = ml2 + l2[i] 
@@ -71,7 +72,7 @@ def histogramaRGB(image):
 
     # B histogram
 
-    plt.figure(2)
+   # plt.figure(2)
 
     for i in range(0, 256):
         ml3 = ml3 + l3[i]
@@ -92,11 +93,12 @@ def histogramaRGB(image):
 
 def histogramaG(img):
     image = img.convert('L')
-    image.show()
+    #image.show()
     i_size = image.size[0]*image.size[1]
     l1 =  image.histogram()
     ml1=0
-    plt.figure(3)
+    plt.gcf()
+    #plt.figure(3)
     for i in range(len(l1)):
         ml1 = ml1 + l1[i]
         plt.bar(i, l1[i], color = getRed(i), edgecolor=getRed(i), alpha=0.3)
@@ -106,7 +108,7 @@ def histogramaG(img):
     print("     Media "+str(ml1/256))
     print("     Asimetria "+str(asim))
     plt.show()
-
+    return image
 
 def desplazamiento(image,cte):
     img = image.convert('L')
@@ -143,12 +145,14 @@ def expansion(image, cmaximo,cminimo):
     imgg.save("hist-escala-desplazamiento.jpg")
     histogramaG(imgg)
 
-
+'''
 image = Image.open("snakes.jpg")
 
-#histogramaRGB("snakes.jpg")
+histogramaRGB(image)
+
 histogramaG(image)
 #desplazamiento(image,-30)
 contraccion(image,150, 160)
 contraccion(image,0, 255)
 
+'''

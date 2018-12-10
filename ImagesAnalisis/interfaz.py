@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image
 import Ruido
+import Operaciones
+import Histograma
+import Filtros
+
 from Umbral import *
 from time import sleep
 
@@ -50,6 +54,15 @@ def funcion(*argv):
       op = Umbral()
       op.addHistorial(auxF)
       imgF = op.rgb(auxF,argv[1])
+   elif (argv[0]==12):
+      imgF = Image.open(act)
+      Histograma.histogramaRGB(auxF)
+      Histograma.histogramaG(auxF)
+   elif (argv[0]==16):
+      imgF = Filtros.pasa_bajas_prom(auxF)
+   elif (argv[0]==17):
+      imgF =  Filtros.pasa_bajas_moda(auxF)
+
    auxF.close()
    imgF.save(act)
    o_size = imgF.size   #Tamaño original de la imagen
@@ -183,12 +196,15 @@ boton = tk.Button(root, text="Operacion OR", command=funcion).grid(row=6, column
 boton = tk.Button(root, text="Operacion NOT", command=funcion).grid(row=6, column=2)
 
 
-boton = tk.Button(root, text="Histograma", command=funcion).grid(row=7, column=0)
+boton = tk.Button(root, text="Histograma", command=lambda:funcion(12,"12")).grid(row=7, column=0)
 boton = tk.Button(root, text="Desplazamiento del Histograma", command=funcion).grid(row=7, column=1)
 boton = tk.Button(root, text="Contraccion del Histograma", command=funcion).grid(row=7, column=2)
 boton = tk.Button(root, text="Expansion del Histograma", command=funcion).grid(row=7, column=3)
 
-boton = tk.Button(root, text="Restaurar", command=restaurar).grid(row=8, column=0)
+boton = tk.Button(root, text="Filtro Mediana", command=lambda:funcion(16,"16")).grid(row=8, column=0)
+boton = tk.Button(root, text="Filtro Moda", command=lambda:funcion(17,"17")).grid(row=8, column=1)
+
+boton = tk.Button(root, text="Restaurar", command=restaurar).grid(row=12, column=0)
 
 #canvas.pack(fill="both", expand=True)
 '''

@@ -119,7 +119,14 @@ def contorno (image):
     aux2 = erosion(aux)
     frontera = Operaciones.restaIMG(aux,image)
     return frontera
-
+def apertura (image):
+    aux = erosion(image)
+    aux2 = dilatacion(aux)
+    return aux2
+def cierre (image):
+    aux = dilatacion(image)
+    aux2 = erosion(image)
+    return aux2
 '''
 #image = Image.open("fractal.png")
 #image = Image.open("fractal2.png")

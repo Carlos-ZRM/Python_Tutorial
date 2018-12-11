@@ -72,7 +72,7 @@ def funcion(*argv):
    elif(argv[0]==6) :
       op = Umbral()
       op.addHistorial(auxF)
-      imgF = op.rgb(auxF,int(argv[1] ))
+      imgF = op.rgb(auxF,argv[1] )
    elif (argv[0]==12):
       imgF = Image.open(act)
       Histograma.histogramaRGB(auxF)
@@ -103,6 +103,17 @@ def funcion(*argv):
       op.addHistorial(auxF)
       imgF2 = op.umbral(150 ,auxF)
       imgF =  Mofos.contorno(imgF2)
+   elif (argv[0]==22):
+      op = Umbral()
+      op.addHistorial(auxF)
+      imgF2 = op.umbral(150 ,auxF)
+      imgF =  Mofos.apertura(imgF2)
+   elif (argv[0]==23):
+      op = Umbral()
+      op.addHistorial(auxF)
+      imgF2 = op.umbral(150 ,auxF)
+      imgF =  Mofos.cierre(imgF2)
+   
 
    auxF.close()
    imgF.save(act)
@@ -284,8 +295,10 @@ boton = tk.Button(root, text="Filtro Moda", command=lambda:funcion(17,"17")).gri
 boton = tk.Button(root, text="Filtro Media", command=lambda:funcion(18,"18")).grid(row=8, column=2)
 
 boton = tk.Button(root, text="Morfologia Dilatacion", command=lambda:funcion(19,"19")).grid(row=9, column=0)
-boton = tk.Button(root, text="Morfologia Erosion", command=lambda:funcion(20,"20")).grid(row=9, column=1)
-boton = tk.Button(root, text="Morfologia Contorno", command=lambda:funcion(21,"21")).grid(row=9, column=2)
+boton = tk.Button(root, text="Erosion", command=lambda:funcion(20,"20")).grid(row=9, column=1)
+boton = tk.Button(root, text="Contorno", command=lambda:funcion(21,"21")).grid(row=9, column=2)
+boton = tk.Button(root, text="Apertura", command=lambda:funcion(22,"22")).grid(row=9, column=3)
+boton = tk.Button(root, text="Cierre", command=lambda:funcion(23,"23")).grid(row=9, column=4)
 
 
 boton = tk.Button(root, text="Restaurar", command=restaurar).grid(row=12, column=0)

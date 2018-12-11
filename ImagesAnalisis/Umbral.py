@@ -99,7 +99,7 @@ class Umbral :
         datos = img.getdata()
         aux = []
         sum = 0
-
+        datosn = []
         for i in range (len(datos)):
             aux= datos[i]
             sum = 0
@@ -108,13 +108,13 @@ class Umbral :
             sum=sum/len(aux)
             if sum > top :
                 #datos[i]=(0,0,0)
-                datos[i]=0
+                datosn.append((0) ) 
             else :
                 #datos[i]=(255,255,255)
-                datos[i]=1
-        dimensiones = self.Historial[self.xHist].size
+                datosn.append((255))
+        dimensiones = img.size
         img2  = Image.new('1', dimensiones )
-        img2.putdata(datos)
+        img2.putdata(datosn)
         #print( datos)
         img2.save("inuse.jpg")
         img2.show()

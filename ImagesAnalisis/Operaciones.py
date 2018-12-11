@@ -81,5 +81,29 @@ def xor_img (data1,data2) :
 def not_img (data) :
    datar = []
    for i in range (len(data)):
-      datar.append(not data[i])
+      datar.append(255 - data[i])
    return datar
+def not_rgb (data) :
+   datar = []
+   for i in range (len(data)):
+      tupla = data[i]
+      r =255 - tupla[0] if 255 -tupla[1]>0 else 0
+      g =255 - tupla[1] if 255 -tupla[1]>0 else 0
+      b =255 - tupla[1] if 255 -tupla[1]>0 else 0
+      datar.append((r,g,b))
+   return datar
+
+img = Image.open("snakes.jpg").convert('L')
+datos = img.getdata()
+datosn = not_img(datos)
+imgg  = Image.new( 'L',img.size )
+imgg.putdata(datosn)
+imgg.show()
+imgg.save("Nueva.jpg")
+img = Image.open("snakes.jpg")
+imgg  = Image.new( "RGB",img.size )
+datos = img.getdata()
+datosn = not_rgb(datos)
+imgg.putdata(datosn)
+imgg.show()
+imgg.save("Nuevas.jpg")

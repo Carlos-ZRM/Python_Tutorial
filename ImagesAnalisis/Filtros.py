@@ -45,6 +45,7 @@ def suma(x,y, matriz, size, f):
                 a.append(matriz[i][j])
             except IndexError:
                 pass 
+    
     if f == 0 :
         if(len(a)>0):
             return int(sum(a) / len(a))
@@ -87,6 +88,20 @@ def suma(x,y, matriz, size, f):
     print (int(prom/9))
     return int(prom/9)
     '''
+def umbral( image, umbral ):
+    img = image.convert('L')
+    data = img.getdata()
+    datan = []
+    for i in range ( len(data) ):
+        if ( data[i]>umbral[0] and  data[i]<umbral[1] ):
+            datan.append( (255) )
+        else :
+            datan.append( (0) )
+    imgg  = Image.new( 'L',img.size )
+    imgg.putdata(datan)
+    imgg.save("inuse.jpg")
+    imgg.show()
+    return imgg
 
 def pasa_bajas_prom(image):
     img = image.convert('L')
@@ -121,10 +136,14 @@ def pasa_bajas_media(image):
     return imgg
 #analisisimagenesescom
 #image = Image.open("tile.png")
+#image = Image.open("snakes.jpg")
 #image = Image.open("fractal2.png")
 #image.show()
 #histogramaRGB("snakes.jpg")
 #pasa_bajas_moda(image)
 #pasa_bajas_prom(image)
 
-    
+image = Image.open("snakes.jpg")
+par = [image, [120,150]]
+aux = umbral(image, [160,180])
+aux.save("s1.jpg")

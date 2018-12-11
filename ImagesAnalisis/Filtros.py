@@ -37,12 +37,7 @@ def promediar(matriz, size, f):
     return datosc
 
 def suma(x,y, matriz, size, f):
-    ax = x-1
-    ay = y -1
     a = []
-    
-    prom = 0.0 
-    c = 0
     ax = x-1
     ay = y -1
     if (ax<0 or ax >= size[1]) or (ay<0 or ay >= size[0]):    
@@ -103,6 +98,7 @@ def pasa_bajas_prom(image):
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
     imgg.save("inuse.jpg")
+    imgg.show()
     return imgg
 
 def pasa_bajas_moda(image):
@@ -113,14 +109,15 @@ def pasa_bajas_moda(image):
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
     imgg.save("inuse.jpg")
+    imgg.show()
     return imgg
 
 #analisisimagenesescom
 #image = Image.open("tile.png")
-#image = Image.open("snakes.jpg")
-#image.show()
+image = Image.open("fractal2.png")
+image.show()
 #histogramaRGB("snakes.jpg")
-#pasa_bajas_moda(image)
-
+pasa_bajas_moda(image)
+pasa_bajas_prom(image)
 
     

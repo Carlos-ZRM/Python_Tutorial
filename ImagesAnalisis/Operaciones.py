@@ -1,3 +1,8 @@
+from PIL import Image
+from random import uniform
+import Operaciones
+import matplotlib.pyplot as plt
+
 def contraccion(datos, k, minimo, cminimo ):
    datar = []
    for i in range(len(datos)):
@@ -43,6 +48,24 @@ def resta (data1,data2):
       b = tupla1[2]-tupla2[2] if tupla1[2]-tupla2[2]>0 else 0
       datar.append((r,g,b))
    return datar
+
+def restaIMG (img1,img2):
+   data1 = img1.getdata()
+   data2 = img2.getdata()
+   datar=[]
+   g = 0
+   for i in range(len(data1)):
+      tupla1 = data1[i]
+      tupla2 = data2[i]
+      if   tupla1[0]-tupla2[0]>0 :
+         g = tupla1[0]-tupla2[0]
+      else:
+         g= 0
+      datar.append(g)
+   imgg  = Image.new( 'L',img1.size )
+   imgg.putdata(datar)
+   imgg.save("hist-escala-desplazamiento.jpg")
+   return imgg
 def and_img (data1,data2) :
    datar = []
    for i in range (len(data1)):

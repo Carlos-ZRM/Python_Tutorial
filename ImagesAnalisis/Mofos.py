@@ -88,9 +88,9 @@ def dilatacion(image):
     #print(matrizb)
     recorrer(matriza, matrizb, tile, img.size, 0 )
     datosn = creardata(matrizb, img.size)
-    imgg  = Image.new( '1',img.size )
+    imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("morfos.jpg")
+    imgg.save("inuse.jpg")
     imgg.show()
     return imgg
 
@@ -111,16 +111,32 @@ def erosion(image):
     datosn = creardata(matrizb, img.size)
     imgg  = Image.new( '1',img.size )
     imgg.putdata(datosn)
-    imgg.save("morfos.jpg")
+    imgg.save("inuse.jpg")
     imgg.show()
     return imgg
+def contorno (image):
+    aux = erosion(image)
+    aux2 = erosion(aux)
+    frontera = Operaciones.restaIMG(aux,image)
+    return frontera
 
+'''
 #image = Image.open("fractal.png")
 #image = Image.open("fractal2.png")
 image = Image.open("test2.jpg")
+image = Image.open("snakes.jpg")
+
 #histogramaRGB("snakes.jpg")
 image.show()
 aux = erosion(image)
-frontera = Operaciones.restaIMG(image,aux)
+aux2 = erosion(aux)
+frontera = Operaciones.restaIMG(aux,image)
+frontera.show()
 #dilatacion(aux)
+aux = erosion(image)
+aux.show()
+image = Image.open("test2.jpg")
 
+'''
+
+#image = Image.open("snakes.jpg")

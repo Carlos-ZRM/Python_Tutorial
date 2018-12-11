@@ -57,10 +57,7 @@ def restaIMG (img1,img2):
    for i in range(len(data1)):
       tupla1 = data1[i]
       tupla2 = data2[i]
-      if   tupla1[0]-tupla2[0]>0 :
-         g = tupla1[0]-tupla2[0]
-      else:
-         g= 0
+      g = tupla1-tupla2 if tupla1-tupla2>0 else 0
       datar.append(g)
    imgg  = Image.new( 'L',img1.size )
    imgg.putdata(datar)

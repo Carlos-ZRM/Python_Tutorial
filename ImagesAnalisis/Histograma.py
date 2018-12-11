@@ -98,16 +98,18 @@ def histogramaG(img):
     l1 =  image.histogram()
     ml1=0
     plt.gcf()
-    #plt.figure(3)
+    plt.figure(0)
     for i in range(len(l1)):
         ml1 = ml1 + l1[i]
         plt.bar(i, l1[i], color = getRed(i), edgecolor=getRed(i), alpha=0.3)
     plt.savefig("histograma-gs.png")
+    imgH = Image.open("histograma-gs.png")
+    imgH.show()
     asim = asimetriaInt(l1,ml1)
     print("Histograma GrayScale ")
     print("     Media "+str(ml1/256))
     print("     Asimetria "+str(asim))
-    plt.show()
+    #plt.show()
     return image
 
 def desplazamiento(image,cte):
@@ -116,8 +118,9 @@ def desplazamiento(image,cte):
     datosn = Operaciones.restaCte(datos, cte)
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("hist-escala-desplazamiento.jpg")
-    histogramaG(imgg)
+    imgg.save("inuse.jpg")
+    #histogramaG(imgg)
+    return imgg
 
 def contraccion(image, cmaximo,cminimo):
     img = image.convert('L')
@@ -129,8 +132,9 @@ def contraccion(image, cmaximo,cminimo):
     datosn = Operaciones.contraccion(datos, k, minimo, cminimo )
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("hist-escala-desplazamiento.jpg")
-    histogramaG(imgg)
+    imgg.save("inuse.jpg")
+    #histogramaG(imgg)
+    return imgg
 
 def expansion(image, cmaximo,cminimo):
     img = image.convert('L')
@@ -142,8 +146,9 @@ def expansion(image, cmaximo,cminimo):
     datosn = Operaciones.contraccion(datos, k, minimo, cminimo )
     imgg  = Image.new( 'L',img.size )
     imgg.putdata(datosn)
-    imgg.save("hist-escala-desplazamiento.jpg")
-    histogramaG(imgg)
+    imgg.save("inuse.jpg")
+    #histogramaG(imgg)
+    return imgg
 
 '''
 image = Image.open("snakes.jpg")

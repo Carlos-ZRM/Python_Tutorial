@@ -95,7 +95,8 @@ class Umbral :
             return imgb
 
     def umbral ( self, top, img):
-        datos = list(self.Historial[self.xHist].getdata() )
+        #datos = list(self.Historial[self.xHist].getdata() )
+        datos = img.getdata()
         aux = []
         sum = 0
 
@@ -117,7 +118,7 @@ class Umbral :
         #print( datos)
         img2.save("inuse.jpg")
         img2.show()
-        self.addHistorial( img2)
+        #self.addHistorial( img2)
         return img2
     
 '''

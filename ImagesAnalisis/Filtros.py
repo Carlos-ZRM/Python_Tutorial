@@ -30,10 +30,7 @@ def promediar(matriz, size, f):
     for i in range (size[1]):
         for j in range(size[0]):
           #  pass
-            if f == 0 :
-               datosc.append(suma(i,j,matriz,size,f)) 
-            elif f == 1:
-               datosc.append(suma(i,j,matriz,size,f)) 
+            datosc.append(suma(i,j,matriz,size,f)) 
     return datosc
 
 def suma(x,y, matriz, size, f):
@@ -54,7 +51,8 @@ def suma(x,y, matriz, size, f):
         else :
             return 0
     elif f ==  1 :
-        #return np.bincount(a).argmax()
+        return np.bincount(a).argmax()
+    elif f ==  2 :
         return int(np.median(a))
     else :
         return matriz[x][y]
@@ -111,13 +109,22 @@ def pasa_bajas_moda(image):
     imgg.save("inuse.jpg")
     imgg.show()
     return imgg
-
+def pasa_bajas_media(image):
+    img = image.convert('L')
+    datos = img.getdata()
+    matriz = crearMat(datos, img.size)
+    datosn = promediar(matriz, img.size,2)
+    imgg  = Image.new( 'L',img.size )
+    imgg.putdata(datosn)
+    imgg.save("inuse.jpg")
+    imgg.show()
+    return imgg
 #analisisimagenesescom
 #image = Image.open("tile.png")
-image = Image.open("fractal2.png")
-image.show()
+#image = Image.open("fractal2.png")
+#image.show()
 #histogramaRGB("snakes.jpg")
-pasa_bajas_moda(image)
-pasa_bajas_prom(image)
+#pasa_bajas_moda(image)
+#pasa_bajas_prom(image)
 
     

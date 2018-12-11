@@ -1,10 +1,13 @@
 import tkinter as tk
+
 from tkinter import filedialog
 from PIL import ImageTk, Image
 import Ruido
 import Operaciones
 import Histograma
 import Filtros
+import Mofos
+import sys
 
 from Umbral import *
 from time import sleep
@@ -13,6 +16,22 @@ rec = "recovery.jpg"
 act = "inuse.jpg"
 def Cerrar():
     pass
+def abrir():
+   pic = filedialog.askopenfilename()
+   aux1 = Image.open(pic)
+   aux1.save(act)
+
+   o_size = aux1.size   #Tamaño original de la imagen
+   f_size = (aux1.size) #Tamaño del canvas donde se mostrará la imagen
+
+   imgr = ImageTk.PhotoImage(aux1)
+  
+   canvas = tk.Canvas(root, width=f_size[0], height= f_size[1])
+   canvas.delete("all")
+   canvas.create_image(f_size[0]/2, f_size[1]/2, anchor=tk.CENTER, image=imgr, tags="img")
+   canvas.grid(row=0, column=0, columnspan=5, rowspan=3)
+   root.mainloop()
+
 def restaurar ():
 
    aux1 = Image.open(rec)
@@ -53,15 +72,37 @@ def funcion(*argv):
    elif(argv[0]==6) :
       op = Umbral()
       op.addHistorial(auxF)
-      imgF = op.rgb(auxF,argv[1])
+      imgF = op.rgb(auxF,int(argv[1] ))
    elif (argv[0]==12):
       imgF = Image.open(act)
       Histograma.histogramaRGB(auxF)
-      Histograma.histogramaG(auxF)
+   elif ( argv[0] == 13 ):
+      imgF = Histograma.desplazamiento(auxF, int(argv[1]) )
+      Histograma.histogramaG(imgF)  
+   elif ( argv[0] == 14 ):
+      imgF = Histograma.contraccion(auxF, int(argv[1]),int (argv[2]))
+      Histograma.histogramaG(imgF)
+   elif (argv[0] == 15):
+      imgF = Histograma.expansion(auxF, 0 , 255 )
+      Histograma.histogramaG(imgF)
    elif (argv[0]==16):
       imgF = Filtros.pasa_bajas_prom(auxF)
    elif (argv[0]==17):
       imgF =  Filtros.pasa_bajas_moda(auxF)
+   elif (argv[0]==18):
+      imgF =  Filtros.pasa_bajas_media(auxF)
+   elif (argv[0]==19):
+      imgF =  Mofos.dilatacion(auxF)
+   elif (argv[0]==20):
+      op = Umbral()
+      op.addHistorial(auxF)
+      imgF2 = op.umbral(150 ,auxF)
+      imgF =  Mofos.erosion(imgF2)
+   elif (argv[0]==21):
+      op = Umbral()
+      op.addHistorial(auxF)
+      imgF2 = op.umbral(150 ,auxF)
+      imgF =  Mofos.contorno(imgF2)
 
    auxF.close()
    imgF.save(act)
@@ -148,6 +189,41 @@ def ruidoP():
     label1 = tk.Label(tl, text='Porcentaje (0,1)')
     label1.grid(row=0, column=0)
     b = tk.Button(tl,text="Generar", command=lambda:funcion(3,entry1.get())).grid(row=1, column=0)
+def contraccionH():
+    tl = tk.Toplevel(root)
+    tl.title("Contraccion del histograma")
+    tl.geometry('300x100')
+    tl.focus_set()
+    tl.grab_set()
+    tl.transient(master=root)
+
+    inf = tk.StringVar(tl)
+    entry1 = tk.Entry(tl, textvariable=inf)
+    entry1.grid(row=0, column=1)
+    label1 = tk.Label(tl, text='CMIN  ')
+    label1.grid(row=0, column=0)
+   
+    inf2 = tk.StringVar(tl)
+    entry2 = tk.Entry(tl, textvariable=inf2)
+    entry2.grid(row=1, column=1)
+    label1 = tk.Label(tl, text='CMAX  ')
+    label1.grid(row=1, column=0)
+    b = tk.Button(tl,text="Generar", command=lambda:funcion( 14 ,entry1.get(), entry2.get() ) ).grid(row=2, column=0)
+
+def deslpazamientoH():
+    tl = tk.Toplevel(root)
+    tl.title("Desplazamiento del histograma")
+    tl.geometry('300x100')
+    tl.focus_set()
+    tl.grab_set()
+    tl.transient(master=root)
+
+    inf = tk.StringVar(tl)
+    entry1 = tk.Entry(tl, textvariable=inf)
+    entry1.grid(row=0, column=1)
+    label1 = tk.Label(tl, text='Despazamiento (-255,255)')
+    label1.grid(row=0, column=0)
+    b = tk.Button(tl,text="Generar", command=lambda:funcion( 13 ,entry1.get())).grid(row=1, column=0)
 
 def umbral():
     tl = tk.Toplevel(root)
@@ -165,8 +241,10 @@ def umbral():
     b = tk.Button(tl,text="Generar", command=lambda:funcion(4,entry1.get())).grid(row=1, column=0)
 
 root = tk.Tk()
+#pic = sys.argv[1]
+#pic = "snakes.jpg"
+pic = filedialog.askopenfilename()
 
-pic = "snakes.jpg"
 img = Image.open(pic)
 img.save(act)
 
@@ -196,15 +274,22 @@ boton = tk.Button(root, text="Operacion OR", command=funcion).grid(row=6, column
 boton = tk.Button(root, text="Operacion NOT", command=funcion).grid(row=6, column=2)
 
 
-boton = tk.Button(root, text="Histograma", command=lambda:funcion(12,"12")).grid(row=7, column=0)
-boton = tk.Button(root, text="Desplazamiento del Histograma", command=funcion).grid(row=7, column=1)
-boton = tk.Button(root, text="Contraccion del Histograma", command=funcion).grid(row=7, column=2)
-boton = tk.Button(root, text="Expansion del Histograma", command=funcion).grid(row=7, column=3)
+boton = tk.Button(root, text="Histograma", command=lambda:funcion(12,"12") ).grid(row=7, column=0)
+boton = tk.Button(root, text="Desplazamiento del Histograma", command= deslpazamientoH ).grid(row=7, column=1)
+boton = tk.Button(root, text="Contraccion del Histograma", command= contraccionH ).grid(row=7, column=2)
+boton = tk.Button(root, text="Expansion del Histograma", command=lambda:funcion(15,"0", "255") ).grid(row=7, column=3)
 
 boton = tk.Button(root, text="Filtro Mediana", command=lambda:funcion(16,"16")).grid(row=8, column=0)
 boton = tk.Button(root, text="Filtro Moda", command=lambda:funcion(17,"17")).grid(row=8, column=1)
+boton = tk.Button(root, text="Filtro Media", command=lambda:funcion(18,"18")).grid(row=8, column=2)
+
+boton = tk.Button(root, text="Morfologia Dilatacion", command=lambda:funcion(19,"19")).grid(row=9, column=0)
+boton = tk.Button(root, text="Morfologia Erosion", command=lambda:funcion(20,"20")).grid(row=9, column=1)
+boton = tk.Button(root, text="Morfologia Contorno", command=lambda:funcion(21,"21")).grid(row=9, column=2)
+
 
 boton = tk.Button(root, text="Restaurar", command=restaurar).grid(row=12, column=0)
+boton = tk.Button(root, text="Abrir", command=abrir).grid(row=12, column=1)
 
 #canvas.pack(fill="both", expand=True)
 '''

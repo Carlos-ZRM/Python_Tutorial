@@ -16,8 +16,10 @@ def contraccion(datos, k, minimo, cminimo ):
          r = aux
       datar.append((r))
    return datar
-def suma (data1,data2):
+def suma (img,img2):
    datar=[]
+   data1 = img.getdata()
+   data2 = img2.getdata()
    for i in range(len(data1)):
       tupla1 = data1[i]
       tupla2 = data2[i]
@@ -25,7 +27,26 @@ def suma (data1,data2):
       g = tupla1[1]+tupla2[1] if tupla1[1]+tupla2[1]<255 else 255
       b = tupla1[2]+tupla2[2] if tupla1[2]+tupla2[2]<255 else 255
       datar.append((r,g,b))
-   return datar
+   imgg  = Image.new( 'RGB',img.size )
+   imgg.putdata(datar)
+   imgg.save("suma.jpg")
+   return imgg
+
+def sumaGray (img,img2):
+   data1 = img.getdata()
+   data2 = img2.getdata()
+   datar=[]
+   for i in range(len(data1)):
+      tupla1 = data1[i]
+      tupla2 = data2[i]
+      r = tupla1+tupla2 if tupla1+tupla2<255 else 255
+      datar.append((r))
+   imgg  = Image.new( 'L',img.size )
+   imgg.putdata(datar)
+   imgg.save("gray.jpg")
+   return imgg
+
+
 def restaCte (data1,cte):
    datar=[]
    for i in range(len(data1)):
@@ -92,7 +113,7 @@ def not_rgb (data) :
       b =255 - tupla[1] if 255 -tupla[1]>0 else 0
       datar.append((r,g,b))
    return datar
-
+"""
 img = Image.open("snakes.jpg").convert('L')
 datos = img.getdata()
 datosn = not_img(datos)
@@ -107,3 +128,4 @@ datosn = not_rgb(datos)
 imgg.putdata(datosn)
 imgg.show()
 imgg.save("Nuevas.jpg")
+"""

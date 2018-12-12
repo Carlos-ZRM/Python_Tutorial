@@ -88,21 +88,90 @@ def suma(x,y, matriz, size, f):
     print (int(prom/9))
     return int(prom/9)
     '''
-def umbral( image, umbral ):
+def umbralD (data,datan,  umbral):
+    for i in range ( len(data) ):
+        inf = umbral[0]
+        sup = umbral[1]
+        if ( data[i]>inf and  data[i]<sup ):
+            datan[i] = -1
+def multiU (image, umbrales):
     img = image.convert('L')
+
     data = img.getdata()
     datan = []
-    for i in range ( len(data) ):
-        if ( data[i]>umbral[0] and  data[i]<umbral[1] ):
-            datan.append( (255) )
+    datar = []
+    size = image.size[0]*image.size[1]
+    for i in range (size):
+        datan.append(0)
+    
+    for j in range (size):
+        aux = []
+        aux = umbrales[0]
+        umbralD(data, datan, aux )
+    for i in range ( len (size)):
+        if (datan[i]== -1 ):
+            datar.append((255))
         else :
-            datan.append( (0) )
+            datar.append((0))
     imgg  = Image.new( 'L',img.size )
-    imgg.putdata(datan)
+    imgg.putdata(datar)
     imgg.save("inuse.jpg")
     imgg.show()
     return imgg
 
+def umbral( image, umbral ):
+    img = image.convert('L')
+    data = img.getdata()
+    datan = []
+    data2 = image.getdata()
+    datan2 = []
+    for i in range ( len(data) ):
+        if ( data[i]>umbral[0] and  data[i]<umbral[1] ):
+            datan.append( (0) )
+            datan2.append( data2[i] )
+        else :
+            datan.append( (255) )
+            datan2.append( (255,255,255) )
+    imgg  = Image.new( 'RGB',img.size )
+    imgg.putdata(datan2)
+    imgg.save("inuse.jpg")
+    imgg.show()
+    return imgg
+"""
+def invertir ():
+    img = image.convert('L')
+    data = img.getdata()
+    datan = []
+    for i in range (len(data)):
+"""
+
+def multiumbral(image , umbrales ):
+    
+    img = image.convert('L')
+    data = img.getdata()
+    datan = []
+    flag = False
+
+    for i in range ( len(data) ):
+        for j in range (len (umbrales) ) :
+            umbral = umbrales[j]
+           
+            if ( data[i]>umbral[0] and  data[i]<umbral[1] ):
+                print (umbral)
+                print(data[i])
+                flag = True
+        
+        if flag :
+            datan.append((255))
+        else :
+            datan.append ((0))
+
+    imgg  = Image.new( '1',img.size )
+    imgg.putdata(datan)
+    imgg.save("inuse.jpg")
+    imgg.show()
+    return imgg
+    return
 def pasa_bajas_prom(image):
     img = image.convert('L')
     datos = img.getdata()
@@ -143,7 +212,16 @@ def pasa_bajas_media(image):
 #pasa_bajas_moda(image)
 #pasa_bajas_prom(image)
 
-image = Image.open("snakes.jpg")
-par = [image, [120,150]]
-aux = umbral(image, [160,180])
-aux.save("s1.jpg")
+image = Image.open("imagenes/pool.png")
+image.show()
+par = [image, [45,50]]
+#aux = umbral(image, [160,180])
+da = [[40,49], [25,30]]
+aux1 = umbral( image, [25,30] ) 
+aux1.save("s1.jpg")
+aux2 =  umbral( image, [45,50] ) 
+aux2.save("s2.jpg")
+aux3 =  umbral( image, [15,20] ) 
+aux3.save("s3.jpg")
+res = Operaciones.suma(aux1,aux2)
+res.show()

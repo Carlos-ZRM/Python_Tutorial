@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    stages {
+        stage('Source') {
+            steps{
+                git  branch: 'Python', url: 'https://github.com/kevop-s/Jenkins-Class.git'
+        
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh('''
+                echo  "#Hola mundo" > jenkins.md
+                ls
+                ''')
+            }
+        }
+        stage('Test') {
+            steps {
+                withPythonEnv('python3') {
+                    sh('''
+                    ls
+                    pip install --quiet pytest
+                    pip install --quiet pylint
+                    pip install nosexcover --quiet pylint
+                    pip3 install nose --quiet pylint
+    
+                    nosetests --with-xcoverage --with-xunit --cover-package=PythonReporte/ --cover-erase
+                    pylint PythonReporte/*.py --reports=y | tee pylint.out
+                    pytest PythonReporte/*.py 
+                    ''')
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+    post {
+        always{
+            junit (
+                allowEmptyResults: true,
+                testResults: './*.xml'
+                )
+            cobertura coberturaReportFile: 'coverage.xml' 
+
+        }
+    }
+}

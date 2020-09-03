@@ -10,12 +10,12 @@ class TestSum(unittest.TestCase):
         self.assertEqual(sum((1, 2, 2)), 5, "Should be 5")
 
     def test_true(self):
-        self.assertTrue( 5==1  , "should be true ")
+        self.assertTrue( 5==5  , "should be true ")
 
     def test_false(self):
-        self.assertFalse( 2==2,  "Should be false" )
+        self.assertFalse( 2=!2,  "Should be false" )
 
     def test_Is(self):
-            self.assertIs( type("5"), int, "should be  innt")
+            self.assertIs( type(5), int, "should be  innt")
 if __name__ == '__main__':
     unittest.main()

@@ -13,7 +13,7 @@ class TestSum(unittest.TestCase):
         self.assertTrue( 5==5  , "should be true ")
 
     def test_false(self):
-        self.assertFalse( 2!=3,  "Should be false" )
+        self.assertFalse( 2==3,  "Should be false" )
 
     def test_Is(self):
             self.assertIs( type(5), int, "should be  innt")
